@@ -1,21 +1,25 @@
-FROM osrf/ros:humble-desktop-full
+ARG ROS_DISTRO=jazzy
+FROM osrf/ros:${ROS_DISTRO}-desktop-full
+
 ARG USERNAME=ros
 ARG USER_UID=1000
-ARG USER_GID=$USER_UID
+ARG USER_GID=${USER_UID}
+
 
 # Delete user if it exists in container (e.g Ubuntu Noble: ubuntu)
-RUN if id -u ${USER_UID} ; then userdel `id -un ${USER_UID}` ; fi
+RUN if id -u ${USER_UID} ; then userdel `id -un ${USER_UID}` ; fi || true
 
 # Install base packages
 RUN apt-get update
 # RUN apt-get upgrade -y
-RUN apt-get install -y sudo
-RUN apt-get install -y ros-humble-turtlebot3* ros-humble-turtlebot3-simulations
+COPY ./turtlebot3/install-${ROS_DISTRO}-turtlebot3-packages.sh /tmp/
+RUN /tmp/install-${ROS_DISTRO}-turtlebot3-packages.sh
 RUN apt-get install -y python3-pip
 
 # Install packages for developing
 RUN apt-get install -y build-essential git
 RUN apt-get install -y python-is-python3 pipx less ripgrep fd-find colordiff tree vim
+RUN apt-get install -y libopencv-contrib-dev
 RUN ln -s /usr/bin/fdfind /usr/bin/fd
 
 # Create the user
@@ -34,8 +38,8 @@ ENV SHELL=/bin/bash
 # [Optional] Set the default user. Omit if you want to keep the default as root.
 USER ${USERNAME}
 WORKDIR /home/${USERNAME}/ws
-RUN echo ". /opt/ros/humble/setup.bash" >> /home/${USERNAME}/.bashrc
+RUN echo ". /opt/ros/${ROS_DISTRO}/setup.bash" >> /home/${USERNAME}/.bashrc
 RUN echo ". /usr/share/gazebo/setup.bash" >> /home/${USERNAME}/.bashrc
-RUN echo "export GAZEBO_MODEL_PATH=\${GAZEBO_MODEL_PATH}:/opt/ros/humble/share/turtlebot3_gazebo/models" >> /home/${USERNAME}/.bashrc
+RUN echo "export GAZEBO_MODEL_PATH=\${GAZEBO_MODEL_PATH}:/opt/ros/${ROS_DISTRO}/share/turtlebot3_gazebo/models" >> /home/${USERNAME}/.bashrc
 RUN echo "export TURTLEBOT3_MODEL=burger" >> /home/${USERNAME}/.bashrc
 CMD ["/bin/bash"]
