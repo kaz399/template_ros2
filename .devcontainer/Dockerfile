@@ -11,16 +11,26 @@ RUN if id -u ${USER_UID} ; then userdel `id -un ${USER_UID}` ; fi || true
 
 # Install base packages
 RUN apt-get update
-# RUN apt-get upgrade -y
+RUN apt-get upgrade -y
+RUN apt-get install -y ros-${ROS_DISTRO}-desktop ros-dev-tools python3-argcomplete
 COPY ./turtlebot3/install-${ROS_DISTRO}-turtlebot3-packages.sh /tmp/
 RUN /tmp/install-${ROS_DISTRO}-turtlebot3-packages.sh
 RUN apt-get install -y python3-pip
 
 # Install packages for developing
 RUN apt-get install -y build-essential git
-RUN apt-get install -y python-is-python3 pipx less ripgrep fd-find colordiff tree vim
+RUN apt-get install -y python-is-python3 pipx less ripgrep fd-find colordiff tree vim source-highlight x11vnc
 RUN apt-get install -y libopencv-contrib-dev
+
+# setup for installed packages
 RUN ln -s /usr/bin/fdfind /usr/bin/fd
+RUN echo 'export LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s"' >> /etc/bash.bashrc && \
+    echo 'export LESS=" -R "' >> /etc/bash.bashrc && \
+    echo 'alias diff="colordiff"' >> /etc/bash.bashrc && \
+    echo 'alias rgall="rg --follow --no-ignore --color=always"' >> /etc/bash.bashrc && \
+    echo 'alias rg="rg --color=always"' >> /etc/bash.bashrc && \
+    echo 'alias fdall="\fd --no-ignore-vcs --color=always"' >> /etc/bash.bashrc && \
+    echo 'alias fd="\fd --color=always"' >> /etc/bash.bashrc
 
 # Create the user
 RUN groupadd --gid ${USER_GID} ${USERNAME}
