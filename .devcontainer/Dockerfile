@@ -18,6 +18,7 @@ RUN apt-get install -y python3-pip
 RUN apt-get install -y python3-rosdep
 RUN apt-get install -y python3-colcon-common-extensions
 RUN apt-get install -y python3-vcstool
+RUN apt-get install -y python3-catkin-tools
 RUN apt-get install -y ros-noetic-dynamixel-sdk
 RUN apt-get install -y ros-noetic-turtlebot3
 RUN apt-get install -y ros-noetic-turtlebot3-simulations
@@ -35,8 +36,8 @@ RUN echo 'export LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh 
     echo 'alias diff="colordiff"' >> /etc/bash.bashrc && \
     echo 'alias rgall="rg --follow --no-ignore --color=always"' >> /etc/bash.bashrc && \
     echo 'alias rg="rg --color=always"' >> /etc/bash.bashrc && \
-    echo 'alias fdall="\fd --no-ignore-vcs --color=always"' >> /etc/bash.bashrc && \
-    echo 'alias fd="\fd --color=always"' >> /etc/bash.bashrc
+    echo 'alias fdall="\\fd --no-ignore-vcs --color=always"' >> /etc/bash.bashrc && \
+    echo 'alias fd="\\fd --color=always"' >> /etc/bash.bashrc
 
 # Create the user
 RUN groupadd --gid ${USER_GID} ${USERNAME}
