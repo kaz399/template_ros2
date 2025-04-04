@@ -29,8 +29,8 @@ RUN echo 'export LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh 
     echo 'alias diff="colordiff"' >> /etc/bash.bashrc && \
     echo 'alias rgall="rg --follow --no-ignore --color=always"' >> /etc/bash.bashrc && \
     echo 'alias rg="rg --color=always"' >> /etc/bash.bashrc && \
-    echo 'alias fdall="\fd --no-ignore-vcs --color=always"' >> /etc/bash.bashrc && \
-    echo 'alias fd="\fd --color=always"' >> /etc/bash.bashrc
+    echo 'alias fdall="\\fd --no-ignore-vcs --color=always"' >> /etc/bash.bashrc && \
+    echo 'alias fd="\\fd --color=always"' >> /etc/bash.bashrc
 
 # Create the user
 RUN groupadd --gid ${USER_GID} ${USERNAME}
@@ -40,6 +40,8 @@ RUN apt-get update && apt-get install -y sudo \
     && chmod 0440 /etc/sudoers.d/${USERNAME}
 
 ENV SHELL=/bin/bash
+
+# RUN rm -rf /var/lib/apt/lists/*
 
 # ********************************************************
 # * Anything else you want to do like clean up goes here *
