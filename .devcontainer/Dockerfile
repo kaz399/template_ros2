@@ -1,10 +1,11 @@
-ARG ROS_DISTRO=jazzy
+ARG ROS_DISTRO=noetic
 FROM osrf/ros:${ROS_DISTRO}-desktop-full
 
 ARG USERNAME=ros
 ARG USER_UID=1000
 ARG USER_GID=${USER_UID}
 
+ENV DEBIAN_FRONTEND=noninteractive
 
 # Delete user if it exists in container (e.g Ubuntu Noble: ubuntu)
 RUN if id -u ${USER_UID} ; then userdel `id -un ${USER_UID}` ; fi || true
@@ -12,10 +13,15 @@ RUN if id -u ${USER_UID} ; then userdel `id -un ${USER_UID}` ; fi || true
 # Install base packages
 RUN apt-get update
 RUN apt-get upgrade -y
-RUN apt-get install -y ros-${ROS_DISTRO}-desktop ros-dev-tools python3-argcomplete
-COPY ./turtlebot3/install-${ROS_DISTRO}-turtlebot3-packages.sh /tmp/
-RUN /tmp/install-${ROS_DISTRO}-turtlebot3-packages.sh
+RUN apt-get install -y x11-apps
 RUN apt-get install -y python3-pip
+RUN apt-get install -y python3-rosdep
+RUN apt-get install -y python3-colcon-common-extensions
+RUN apt-get install -y python3-vcstool
+RUN apt-get install -y ros-noetic-dynamixel-sdk
+RUN apt-get install -y ros-noetic-turtlebot3
+RUN apt-get install -y ros-noetic-turtlebot3-simulations
+RUN rosdep update
 
 # Install packages for developing
 RUN apt-get install -y build-essential git
@@ -40,6 +46,8 @@ RUN apt-get update && apt-get install -y sudo \
     && chmod 0440 /etc/sudoers.d/${USERNAME}
 
 ENV SHELL=/bin/bash
+
+# RUN rm -rf /var/lib/apt/lists/*
 
 # ********************************************************
 # * Anything else you want to do like clean up goes here *

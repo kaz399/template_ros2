@@ -1,5 +1,5 @@
 {
-    "name": "ROS 2 Development Container",
+    "name": "ROS 1 Development Container",
     "privileged": true,
     "remoteUser": "ros",
     "build": {
