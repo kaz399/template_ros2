@@ -31,7 +31,6 @@ RUN echo '' > /etc/bash.bashrc && \
     echo '# add local settings ---------------------------------' > /etc/bash.bashrc && \
     echo 'export LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s"' >> /etc/bash.bashrc && \
     echo 'export LESS=" -R "' >> /etc/bash.bashrc && \
-    echo 'export PATH="/opt/nvim/:${PATH}"' >> /etc/bash.bashrc && \
     echo 'alias diff="colordiff"' >> /etc/bash.bashrc && \
     echo 'alias rgall="rg --follow --no-ignore --color=always"' >> /etc/bash.bashrc && \
     echo 'alias rg="rg --color=always"' >> /etc/bash.bashrc && \
