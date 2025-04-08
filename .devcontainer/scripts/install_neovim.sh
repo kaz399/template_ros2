@@ -1,15 +1,14 @@
 #!/usr/bin/env bash
-
 set -eu
 
-mkdir -p /opt/nvim
-cd /opt/nvim
-wget https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage
-chmod +x nvim-linux-x86_64.appimage
-./nvim-linux-x86_64.appimage --appimage-extract
-mv squashfs-root nvim_squashfs-root
-ln -s ./nvim_squashfs-root/AppRun nvim
+NVIM_VERSION=0.11.0
 
+sudo apt-get install -y build-essential curl gettext cmake
+cd /tmp
+wget https://github.com/neovim/neovim/archive/refs/tags/v${NVIM_VERSION}.tar.gz
+tar xvf v${NVIM_VERSION}.tar.gz
+cd neovim-${NVIM_VERSION}
 
-
+make CMAKE_BUILD_TYPE=RelWithDebInfo
+sudo make install
 
