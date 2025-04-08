@@ -31,7 +31,9 @@ else
     -e ROS_LOCALHOST_ONLY=1 \
     -e ROS_DOMAIN_ID=42 \
     --device /dev/dri \
+    -v ${HOME}/.ssh:/home/${ROS_USERNAME}/.ssh \
     -v ${HOME}/.vim:/home/${ROS_USERNAME}/.vim \
+    -v ${HOME}/.local:/home/${ROS_USERNAME}/.local \
     -v ${HOME}/.config:/home/${ROS_USERNAME}/.config \
     -v ${HOME}/.emacs.d:/home/${ROS_USERNAME}/.emacs.d \
     ${CONTAINER_NAME}

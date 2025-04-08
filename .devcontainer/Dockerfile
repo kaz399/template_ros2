@@ -22,10 +22,16 @@ RUN apt-get install -y build-essential git curl wget unzip p7zip-full lzma
 RUN apt-get install -y python-is-python3 pipx less ripgrep fd-find colordiff tree vim source-highlight x11vnc
 RUN apt-get install -y libopencv-contrib-dev
 
+COPY ./scripts/install_neovim.sh /tmp/
+RUN /tmp/install_neovim.sh
+
 # setup for installed packages
 RUN ln -s /usr/bin/fdfind /usr/bin/fd
-RUN echo 'export LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s"' >> /etc/bash.bashrc && \
+RUN echo '' > /etc/bash.bashrc && \
+    echo '# add local settings ---------------------------------' > /etc/bash.bashrc && \
+    echo 'export LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s"' >> /etc/bash.bashrc && \
     echo 'export LESS=" -R "' >> /etc/bash.bashrc && \
+    echo 'export PATH="/opt/nvim/:${PATH}"' >> /etc/bash.bashrc && \
     echo 'alias diff="colordiff"' >> /etc/bash.bashrc && \
     echo 'alias rgall="rg --follow --no-ignore --color=always"' >> /etc/bash.bashrc && \
     echo 'alias rg="rg --color=always"' >> /etc/bash.bashrc && \
@@ -50,8 +56,11 @@ ENV SHELL=/bin/bash
 # [Optional] Set the default user. Omit if you want to keep the default as root.
 USER ${USERNAME}
 WORKDIR /home/${USERNAME}/ws
+RUN echo
 RUN echo ". /opt/ros/${ROS_DISTRO}/setup.bash" >> /home/${USERNAME}/.bashrc
-RUN echo ". /usr/share/gazebo/setup.bash" >> /home/${USERNAME}/.bashrc
+RUN echo "if [[ -f /usr/share/gazebo/setup.bash ]] ; then . /usr/share/gazebo/setup.bash; fi" >> /home/${USERNAME}/.bashrc
 RUN echo "export GAZEBO_MODEL_PATH=\${GAZEBO_MODEL_PATH}:/opt/ros/${ROS_DISTRO}/share/turtlebot3_gazebo/models" >> /home/${USERNAME}/.bashrc
 RUN echo "export TURTLEBOT3_MODEL=burger" >> /home/${USERNAME}/.bashrc
+RUN echo "source /etc/bash_completion.d/git-prompt" >> /home/${USERNAME}/.bashrc
+RUN echo "PS1='[\\u@\\h \\W\$(__git_ps1 \" (%s)\")]\\$ '" >> /home/${USERNAME}/.bashrc
 CMD ["/bin/bash"]
