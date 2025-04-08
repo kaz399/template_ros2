@@ -63,11 +63,13 @@ ENV SHELL=/bin/bash
 # [Optional] Set the default user. Omit if you want to keep the default as root.
 USER ${USERNAME}
 WORKDIR /home/${USERNAME}/ws
-RUN echo
+COPY ./scripts/set-prompt.sh /home/${USERNAME}/.set-prompt.sh
+
 RUN echo ". /opt/ros/${ROS_DISTRO}/setup.bash" >> /home/${USERNAME}/.bashrc
 RUN echo "if [[ -f /usr/share/gazebo/setup.bash ]] ; then . /usr/share/gazebo/setup.bash; fi" >> /home/${USERNAME}/.bashrc
 RUN echo "export GAZEBO_MODEL_PATH=\${GAZEBO_MODEL_PATH}:/opt/ros/${ROS_DISTRO}/share/turtlebot3_gazebo/models" >> /home/${USERNAME}/.bashrc
 RUN echo "export TURTLEBOT3_MODEL=burger" >> /home/${USERNAME}/.bashrc
 RUN echo "source /etc/bash_completion.d/git-prompt" >> /home/${USERNAME}/.bashrc
-RUN echo "PS1='[\\u@\\h \\W\$(__git_ps1 \" (%s)\")]\\$ '" >> /home/${USERNAME}/.bashrc
+RUN echo "source ~/.set-prompt.sh" >> /home/${USERNAME}/.bashrc
+RUN echo "alias vi=nvim" >> /home/${USERNAME}/.bashrc
 CMD ["/bin/bash"]
