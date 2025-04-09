@@ -37,8 +37,8 @@
     "mounts": [
        "source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind,consistency=cached",
        "source=/dev/dri,target=/dev/dri,type=bind,consistency=cached",
-       "source=${env:HOME}/.ssh,target=/home/ws/.ssh/,type=bind,consistency=cacher",
-       "source=${localWorkspaceFolder}/commandhistory,target=/commandhistory,type=volume"
+       "source=${env:HOME}/.ssh,target=/home/ws/.ssh/,type=bind,consistency=cached",
+       "source=${localWorkspaceFolder}/commandhistory,target=/commandhistory,type=bind"
     ],
     "initializeCommand": "xhost +local:${env:USERNAME}"
 }
