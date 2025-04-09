@@ -14,6 +14,10 @@ ROS_USERNAME=ros
 
 DISPLAY=unix:0
 
+if [[ ! -d ${REPOSITORY_ROOT}/commandhistory ]] ; then
+  mkdir ${REPOSITORY_ROOT}/commandhistory
+fi
+
 if [[ -n "${CONTAINER_ID}" ]] ; then
   echo "into the running container '${CONTAINER_NAME}':${CONTAINER_ID}"
   docker exec -it ${CONTAINER_ID} bash
@@ -36,6 +40,7 @@ else
     -v ${HOME}/.local:/home/${ROS_USERNAME}/.local \
     -v ${HOME}/.config:/home/${ROS_USERNAME}/.config \
     -v ${HOME}/.emacs.d:/home/${ROS_USERNAME}/.emacs.d \
+    -v ${REPOSITORY_ROOT}/commandhistory:/commandhistory \
     ${CONTAINER_NAME}
   xhost -local:${USERNAME}
 fi

@@ -4,12 +4,18 @@ git_branch() {
 
 function set_prompt {
     history -a
+    history -c
+    history -r
     if [ -n "${VIRTUAL_ENV}" ] ; then
         VENV="\[\033[35m\](venv:$(basename ${VIRTUAL_ENV}))\[\033[00m\]"
     else
         VENV=""
     fi
     PS1="${VENV}\[\033[32m\]\$HOSTNAME\[\033[00m\]:\[\033[36m\]\w\[\033[31m\]$(git_branch)\[\033[00m\]\n\$ "
+}
+
+function prompt_func {
+    share_history
 }
 
 PROMPT_COMMAND='set_prompt'
