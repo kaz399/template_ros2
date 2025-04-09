@@ -28,7 +28,7 @@ RUN rosdep update
 RUN apt-get install -y build-essential git curl wget unzip p7zip-full lzma
 RUN apt-get install -y python-is-python3 pipx less ripgrep fd-find colordiff tree vim source-highlight x11vnc
 RUN apt-get install -y libopencv-contrib-dev
-RUN apt-get install -y llvm clangd clang-format lld mold
+RUN apt-get install -y llvm clangd clang-format lld
 
 COPY ./scripts/install_neovim.sh /tmp/
 RUN /tmp/install_neovim.sh
