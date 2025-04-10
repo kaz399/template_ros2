@@ -37,8 +37,6 @@ RUN /tmp/install_neovim.sh
 RUN ln -s /usr/bin/fdfind /usr/bin/fd
 RUN echo '' > /etc/bash.bashrc && \
     echo '# add local settings ---------------------------------' > /etc/bash.bashrc && \
-    echo 'export LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s"' >> /etc/bash.bashrc && \
-    echo 'export LESS=" -R "' >> /etc/bash.bashrc && \
     echo 'alias diff="colordiff"' >> /etc/bash.bashrc && \
     echo 'alias rgall="rg --follow --no-ignore --color=always"' >> /etc/bash.bashrc && \
     echo 'alias rg="rg --color=always"' >> /etc/bash.bashrc && \
@@ -75,6 +73,8 @@ RUN echo "if [[ -f /usr/share/gazebo/setup.bash ]] ; then . /usr/share/gazebo/se
 RUN echo "export GAZEBO_MODEL_PATH=\${GAZEBO_MODEL_PATH}:/opt/ros/${ROS_DISTRO}/share/turtlebot3_gazebo/models" >> /home/${USERNAME}/.bashrc
 RUN echo "export TURTLEBOT3_MODEL=burger" >> /home/${USERNAME}/.bashrc
 RUN echo "export HISTFILE=/commandhistory/.bash_history" >> /home/${USERNAME}/.bashrc
+RUN echo 'export LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s"' >> /home/${USERNAME}/.bashrc
+RUN echo 'export LESS=" -R "' >> /home/${USERNAME}/.bashrc
 RUN echo "source /etc/bash_completion.d/git-prompt" >> /home/${USERNAME}/.bashrc
 RUN echo "source ~/.set-prompt.sh" >> /home/${USERNAME}/.bashrc
 RUN echo "alias vi=nvim" >> /home/${USERNAME}/.bashrc
