@@ -4,6 +4,7 @@ FROM osrf/ros:${ROS_DISTRO}-desktop-full
 ARG USERNAME=ros
 ARG USER_UID=1000
 ARG USER_GID=${USER_UID}
+ARG TZ=Asia/Tokyo
 
 
 # Delete user if it exists in container (e.g Ubuntu Noble: ubuntu)
@@ -66,8 +67,9 @@ RUN echo "if [[ -f /usr/share/gazebo/setup.bash ]] ; then . /usr/share/gazebo/se
 RUN echo "export GAZEBO_MODEL_PATH=\${GAZEBO_MODEL_PATH}:/opt/ros/${ROS_DISTRO}/share/turtlebot3_gazebo/models" >> /home/${USERNAME}/.bashrc
 RUN echo "export TURTLEBOT3_MODEL=burger" >> /home/${USERNAME}/.bashrc
 RUN echo "export HISTFILE=/commandhistory/.bash_history" >> /home/${USERNAME}/.bashrc
-RUN echo 'export LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s"' >> /home/${USERNAME}/.bashrc
-RUN echo 'export LESS=" -R "' >> /home/${USERNAME}/.bashrc
+RUN echo "export LESSOPEN=\"| /usr/share/source-highlight/src-hilite-lesspipe.sh %s\"" >> /home/${USERNAME}/.bashrc
+RUN echo "export LESS=\" -R \"" >> /home/${USERNAME}/.bashrc
+RUN echo "export TZ=${TZ}" >> /home/${USERNAME}/.bashrc
 RUN echo "source /etc/bash_completion.d/git-prompt" >> /home/${USERNAME}/.bashrc
 RUN echo "source ~/.set-prompt.sh" >> /home/${USERNAME}/.bashrc
 RUN echo "alias vi=nvim" >> /home/${USERNAME}/.bashrc
