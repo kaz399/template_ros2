@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -eu
 
-NVIM_VERSION=0.11.0
+NVIM_VERSION=0.9.5
 
 sudo apt-get install -y build-essential curl gettext cmake
 cd /tmp
