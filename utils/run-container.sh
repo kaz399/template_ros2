@@ -25,6 +25,7 @@ else
   echo "start container '${CONTAINER_NAME}'"
   xhost +local:${USERNAME}
   docker run \
+    --privileged \
     -it \
     --hostname rosbench \
     --net=host \
@@ -34,7 +35,7 @@ else
     -e DISPLAY=${DISPLAY} \
     -e ROS_LOCALHOST_ONLY=1 \
     -e ROS_DOMAIN_ID=42 \
-    --device /dev/dri \
+    -v /dev:/dev \
     -v ${HOME}/.ssh:/home/${ROS_USERNAME}/.ssh \
     -v ${HOME}/.vim:/home/${ROS_USERNAME}/.vim \
     -v ${HOME}/.local:/home/${ROS_USERNAME}/.local \
@@ -44,6 +45,3 @@ else
     ${CONTAINER_NAME}
   xhost -local:${USERNAME}
 fi
-#    -v ${HOME}/.local:/home/${ROS_USERNAME}/.local \
-
-
