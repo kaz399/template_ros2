@@ -38,8 +38,8 @@ else
     -v /dev:/dev \
     -v ${HOME}/.ssh:/home/${ROS_USERNAME}/.ssh \
     -v ${HOME}/.vim:/home/${ROS_USERNAME}/.vim \
-    -v ${HOME}/.local:/home/${ROS_USERNAME}/.local \
-    -v ${HOME}/.config:/home/${ROS_USERNAME}/.config \
+    -v ${HOME}/.local/share/nvim:/home/${ROS_USERNAME}/.local/share/nvim \
+    -v ${HOME}/.config/nvim:/home/${ROS_USERNAME}/.config/nvim \
     -v ${HOME}/.emacs.d:/home/${ROS_USERNAME}/.emacs.d \
     -v ${REPOSITORY_ROOT}/commandhistory:/commandhistory \
     ${CONTAINER_NAME}
