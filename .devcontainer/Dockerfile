@@ -63,7 +63,7 @@ USER ${USERNAME}
 WORKDIR /home/${USERNAME}/ws
 COPY ./scripts/set-prompt.sh /home/${USERNAME}/.set-prompt.sh
 
-RUN echo ". /opt/ros/${ROS_DISTRO}/setup.bash" >> /home/${USERNAME}/.bashrc
+RUN echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> /home/${USERNAME}/.bashrc
 RUN echo "if [[ -f /usr/share/gazebo/setup.bash ]] ; then . /usr/share/gazebo/setup.bash; fi" >> /home/${USERNAME}/.bashrc
 RUN echo "export GAZEBO_MODEL_PATH=\${GAZEBO_MODEL_PATH}:/opt/ros/${ROS_DISTRO}/share/turtlebot3_gazebo/models" >> /home/${USERNAME}/.bashrc
 RUN echo "export TURTLEBOT3_MODEL=burger" >> /home/${USERNAME}/.bashrc
@@ -71,7 +71,7 @@ RUN echo "export HISTFILE=/commandhistory/.bash_history" >> /home/${USERNAME}/.b
 RUN echo "export LESSOPEN=\"| /usr/share/source-highlight/src-hilite-lesspipe.sh %s\"" >> /home/${USERNAME}/.bashrc
 RUN echo "export LESS=\" -R \"" >> /home/${USERNAME}/.bashrc
 RUN echo "export TZ=${TZ}" >> /home/${USERNAME}/.bashrc
-RUN echo "export PATH=/home/${USERNAME}/bin:/home/${USERNAME}/.local/bin:/home/${USERNAME}/.cargo/bin:${PATH}" >> /home/${USERNAME}/.bashrc
+RUN echo "export PATH=/home/${USERNAME}/bin:/home/${USERNAME}/.local/bin:/home/${USERNAME}/.cargo/bin:\${PATH}" >> /home/${USERNAME}/.bashrc
 RUN echo "source /etc/bash_completion.d/git-prompt" >> /home/${USERNAME}/.bashrc
 RUN echo "source ~/.set-prompt.sh" >> /home/${USERNAME}/.bashrc
 RUN echo "alias vi=nvim" >> /home/${USERNAME}/.bashrc
