@@ -19,10 +19,11 @@ RUN /tmp/install-${ROS_DISTRO}-turtlebot3-packages.sh
 RUN apt-get install -y python3-pip
 
 # Install packages for developing
-RUN apt-get install -y build-essential git curl wget unzip p7zip-full lzma
+RUN apt-get install -y build-essential git curl wget unzip p7zip-full lzma ninja-build
 RUN apt-get install -y python-is-python3 pipx less ripgrep fd-find colordiff tree vim source-highlight x11vnc
 RUN apt-get install -y libopencv-contrib-dev
 RUN apt-get install -y llvm clangd clang-format lld
+RUN apt-get install -y usbutils
 
 COPY ./scripts/install_neovim.sh /tmp/
 RUN /tmp/install_neovim.sh
@@ -70,7 +71,12 @@ RUN echo "export HISTFILE=/commandhistory/.bash_history" >> /home/${USERNAME}/.b
 RUN echo "export LESSOPEN=\"| /usr/share/source-highlight/src-hilite-lesspipe.sh %s\"" >> /home/${USERNAME}/.bashrc
 RUN echo "export LESS=\" -R \"" >> /home/${USERNAME}/.bashrc
 RUN echo "export TZ=${TZ}" >> /home/${USERNAME}/.bashrc
+RUN echo "export PATH=/home/${USERNAME}/bin:/home/${USERNAME}/.local/bin:/home/${USERNAME}/.cargo/bin:${PATH}" >> /home/${USERNAME}/.bashrc
 RUN echo "source /etc/bash_completion.d/git-prompt" >> /home/${USERNAME}/.bashrc
 RUN echo "source ~/.set-prompt.sh" >> /home/${USERNAME}/.bashrc
 RUN echo "alias vi=nvim" >> /home/${USERNAME}/.bashrc
+
+COPY ./scripts/install_python_utils.sh /tmp/
+RUN USER=${USERNAME} /tmp/install_python_utils.sh
+
 CMD ["/bin/bash"]
