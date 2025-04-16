@@ -27,7 +27,7 @@ else
   docker run \
     --privileged \
     -it \
-    --hostname rosbench \
+    --hostname ${HOSTNAME} \
     --net=host \
     --pid=host \
     --ipc=host \
