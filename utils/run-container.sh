@@ -23,7 +23,7 @@ if [[ -n "${CONTAINER_ID}" ]] ; then
   docker exec -it ${CONTAINER_ID} bash
 else
   echo "start container '${CONTAINER_NAME}'"
-  xhost +local:${USERNAME}
+  xhost +local:${USER}
   docker run \
     --privileged \
     -it \
@@ -42,5 +42,5 @@ else
     -v ${HOME}/.emacs.d:/home/${ROS_USERNAME}/.emacs.d \
     -v ${REPOSITORY_ROOT}/commandhistory:/commandhistory \
     ${CONTAINER_NAME}
-  xhost -local:${USERNAME}
+  xhost -local:${USER}
 fi
