@@ -35,6 +35,7 @@ else
     -e DISPLAY=${DISPLAY} \
     -e ROS_LOCALHOST_ONLY=1 \
     -e ROS_DOMAIN_ID=42 \
+    -e TERM=${TERM} \
     -v ${HOME}/.ssh:/home/${ROS_USERNAME}/.ssh \
     -v ${HOME}/.vim:/home/${ROS_USERNAME}/.vim \
     -v ${HOME}/.local/share/nvim:/home/${ROS_USERNAME}/.local/share/nvim \
