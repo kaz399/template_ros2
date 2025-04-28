@@ -4,7 +4,7 @@ set -eu
 NVIM_VERSION=0.11.1
 MACHINE=$(uname -m)
 
-sudo apt-get install -y build-essential curl gettext cmake ninja-build
+sudo apt-get install -y build-essential curl wget gettext cmake ninja-build
 cd /tmp
 wget https://github.com/neovim/neovim/archive/refs/tags/v${NVIM_VERSION}.tar.gz
 tar xvf v${NVIM_VERSION}.tar.gz
