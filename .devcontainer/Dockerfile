@@ -26,15 +26,17 @@ RUN apt-get install -y ros-noetic-turtlebot3-simulations
 RUN rosdep update
 
 # Install packages for developing
+COPY ./scripts/install_neovim.sh /tmp/
+RUN /tmp/install_neovim.sh
+
 RUN apt-get install -y build-essential git curl wget unzip p7zip-full lzma ninja-build
 RUN apt-get install -y python3-venv python3-dev
 RUN apt-get install -y python-is-python3 pipx less ripgrep fd-find colordiff tree vim source-highlight x11vnc
 RUN apt-get install -y libopencv-contrib-dev
 RUN apt-get install -y llvm clangd clang-format lld
 RUN apt-get install -y usbutils
+RUN apt-get install -y gdb
 
-COPY ./scripts/install_neovim.sh /tmp/
-RUN /tmp/install_neovim.sh
 
 # setup for installed packages
 RUN ln -s /usr/bin/fdfind /usr/bin/fd

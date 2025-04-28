@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -eu
 
-NVIM_VERSION=0.9.5
+NVIM_VERSION=0.11.1
 MACHINE=$(uname -m)
 
 sudo apt-get install -y build-essential curl gettext cmake ninja-build
