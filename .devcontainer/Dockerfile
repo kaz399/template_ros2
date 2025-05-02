@@ -14,6 +14,7 @@ RUN if id -u ${USER_UID} ; then userdel `id -un ${USER_UID}` ; fi || true
 RUN apt-get update
 RUN apt-get upgrade -y
 RUN apt-get install -y ros-${ROS_DISTRO}-desktop ros-dev-tools python3-argcomplete
+RUN apt-get install -y ros-${ROS_DISTRO}-ament-clang-format
 COPY ./turtlebot3/install-${ROS_DISTRO}-turtlebot3-packages.sh /tmp/
 RUN /tmp/install-${ROS_DISTRO}-turtlebot3-packages.sh
 RUN apt-get install -y python3-pip
