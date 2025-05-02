@@ -20,9 +20,9 @@ RUN apt-get install -y python3-rosdep
 RUN apt-get install -y python3-colcon-common-extensions
 RUN apt-get install -y python3-vcstool
 RUN apt-get install -y python3-catkin-tools
-RUN apt-get install -y ros-noetic-dynamixel-sdk
-RUN apt-get install -y ros-noetic-turtlebot3
-RUN apt-get install -y ros-noetic-turtlebot3-simulations
+RUN apt-get install -y ros-${ROS_DISTRO}-dynamixel-sdk
+RUN apt-get install -y ros-${ROS_DISTRO}-turtlebot3
+RUN apt-get install -y ros-${ROS_DISTRO}-turtlebot3-simulations
 RUN rosdep update
 
 # Install packages for developing
