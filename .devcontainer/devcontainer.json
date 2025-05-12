@@ -41,6 +41,7 @@
     "mounts": [
        "source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind,consistency=cached",
        "source=/dev/dri,target=/dev/dri,type=bind,consistency=cached",
+       "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind,consistency=cached",
        "source=${env:HOME}/.ssh,target=/home/ws/.ssh/,type=bind,consistency=cached",
        "source=${localWorkspaceFolder}/commandhistory,target=/commandhistory,type=bind"
     ],

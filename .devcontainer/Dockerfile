@@ -4,6 +4,7 @@ FROM osrf/ros:${ROS_DISTRO}-desktop-full
 ARG USERNAME=ros
 ARG USER_UID=1000
 ARG USER_GID=${USER_UID}
+ARG DOCKER_GID=984
 ARG TZ=Asia/Tokyo
 
 ENV DEBIAN_FRONTEND=noninteractive
@@ -37,6 +38,11 @@ RUN apt-get install -y llvm clangd clang-format lld
 RUN apt-get install -y usbutils
 RUN apt-get install -y gdb
 
+RUN apt-get install -y apt-transport-https ca-certificates gnupg lsb-release
+RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+RUN echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
+RUN apt-get update
+RUN apt-get install -y docker-ce-cli
 
 # setup for installed packages
 RUN ln -s /usr/bin/fdfind /usr/bin/fd
@@ -54,6 +60,9 @@ RUN useradd --uid ${USER_UID} --gid ${USER_GID} -m ${USERNAME}
 RUN apt-get update && apt-get install -y sudo \
     && echo ${USERNAME} ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/${USERNAME} \
     && chmod 0440 /etc/sudoers.d/${USERNAME}
+
+RUN groupadd --gid ${DOCKER_GID} docker
+RUN usermod -a -G docker ${USERNAME}
 
 # Create history file
 RUN mkdir /commandhistory \

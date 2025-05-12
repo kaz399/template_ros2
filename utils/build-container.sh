@@ -14,6 +14,7 @@ REPOSITORY_ROOT=$(git rev-parse --show-toplevel)
 docker build -t ${CONTAINER_NAME} \
   --build-arg USER_UID=$(id -u) \
   --build-arg USER_GID=$(id -g) \
+  --build-arg DOCKER_GID=$(getent group docker | cut -d: -f3) \
   ${REPOSITORY_ROOT}/.devcontainer \
   ${@}
 
