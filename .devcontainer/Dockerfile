@@ -81,6 +81,8 @@ ENV SHELL=/bin/bash
 USER ${USERNAME}
 WORKDIR /home/${USERNAME}/ws
 COPY ./scripts/set-prompt.sh /home/${USERNAME}/.set-prompt.sh
+RUN mkdir /home/${USERNAME}/.local
+RUN mkdir /home/${USERNAME}/.config
 
 RUN echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> /home/${USERNAME}/.bashrc
 RUN echo "if [[ -f /usr/share/gazebo/setup.bash ]] ; then . /usr/share/gazebo/setup.bash; fi" >> /home/${USERNAME}/.bashrc
