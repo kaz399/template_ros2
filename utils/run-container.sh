@@ -33,10 +33,15 @@ else
     --ipc=host \
     -v ${REPOSITORY_ROOT}:/home/${ROS_USERNAME}/ws \
     -e DISPLAY=${DISPLAY} \
-    -e ROS_LOCALHOST_ONLY=1 \
+    -e ROS_AUTOMATIC_DISCOVERY_RANGE=LOCALHOST \
     -e ROS_DOMAIN_ID=42 \
     -e TERM=${TERM} \
+    -v /mnt/wslg:/mnt/wslg \
+    -v /tmp/.X11-unix:/tmp/.X11-unix \
+    -v /dev/dri:/dev/dri \
     -v /var/run/docker.sock:/var/run/docker.sock \
+    -v ${HOME}/.gitconfig:/home/${ROS_USERNAME}/.gitconfig \
+    -v ${HOME}/.gitignore:/home/${ROS_USERNAME}/.gitignore \
     -v ${HOME}/.ssh:/home/${ROS_USERNAME}/.ssh \
     -v ${HOME}/.vim:/home/${ROS_USERNAME}/.vim \
     -v ${HOME}/.local/share/nvim:/home/${ROS_USERNAME}/.local/share/nvim \
