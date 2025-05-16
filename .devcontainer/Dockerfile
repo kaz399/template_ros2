@@ -88,6 +88,7 @@ RUN mkdir /home/${USERNAME}/.config
 
 RUN echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> /home/${USERNAME}/.bashrc
 RUN echo "if [[ -f /usr/share/gazebo/setup.bash ]] ; then . /usr/share/gazebo/setup.bash; fi" >> /home/${USERNAME}/.bashrc
+RUN echo "if [[ -f /usr/share/bash-completion/completions/git ]] ; then .  /usr/share/bash-completion/completions/git; fi" >> /home/${USERNAME}/.bashrc
 RUN echo "export GAZEBO_MODEL_PATH=\${GAZEBO_MODEL_PATH}:/opt/ros/${ROS_DISTRO}/share/turtlebot3_gazebo/models" >> /home/${USERNAME}/.bashrc
 RUN echo "export TURTLEBOT3_MODEL=burger" >> /home/${USERNAME}/.bashrc
 RUN echo "export HISTFILE=/commandhistory/.bash_history" >> /home/${USERNAME}/.bashrc
