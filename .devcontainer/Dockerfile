@@ -5,6 +5,7 @@ ARG USERNAME=ros
 ARG USER_UID=1000
 ARG USER_GID=${USER_UID}
 ARG DOCKER_GID=984
+ARG RENDER_GID=992
 ARG TZ=Asia/Tokyo
 
 ENV DEBIAN_FRONTEND=noninteractive
@@ -71,6 +72,10 @@ RUN apt-get update && apt-get install -y sudo \
 
 RUN groupadd --gid ${DOCKER_GID} docker
 RUN usermod -a -G docker ${USERNAME}
+RUN groupadd --gid ${RENDER_GID} render
+RUN usermod -a -G render ${USERNAME}
+
+RUN usermod -a -G video ${USERNAME}
 
 # Create history file
 RUN mkdir /commandhistory \
@@ -88,6 +93,11 @@ ENV SHELL=/bin/bash
 # [Optional] Set the default user. Omit if you want to keep the default as root.
 USER ${USERNAME}
 WORKDIR /home/${USERNAME}/ws
+
+RUN sudo mv /root/ros2_ws/src /opt/hats_modules/
+RUN sudo chown -R ${USER_UID}:${USER_GID} /opt/hats_modules/
+COPY ./scripts/make_link.sh /usr/local/bin/make_link.sh
+
 COPY ./scripts/set-prompt.sh /home/${USERNAME}/.set-prompt.sh
 RUN mkdir /home/${USERNAME}/.local
 RUN mkdir /home/${USERNAME}/.config
@@ -102,11 +112,16 @@ RUN echo "export LESSOPEN=\"| /usr/share/source-highlight/src-hilite-lesspipe.sh
 RUN echo "export LESS=\" -R \"" >> /home/${USERNAME}/.bashrc
 RUN echo "export TZ=${TZ}" >> /home/${USERNAME}/.bashrc
 RUN echo "export PATH=/home/${USERNAME}/bin:/home/${USERNAME}/.local/bin:/home/${USERNAME}/.cargo/bin:\${PATH}" >> /home/${USERNAME}/.bashrc
+RUN echo "export PYTHONPATH=\${PYTHONPATH}:/home/ros/ws/src/hats_ros2_common/hats_bridge_adapter" >> /home/${USERNAME}/.bashrc
 RUN echo "source /etc/bash_completion.d/git-prompt" >> /home/${USERNAME}/.bashrc
 RUN echo "source ~/.set-prompt.sh" >> /home/${USERNAME}/.bashrc
 RUN echo "alias vi=nvim" >> /home/${USERNAME}/.bashrc
+RUN echo "(cd /home/${USERNAME}/ws/src && /usr/local/bin/make_link.sh /opt/hats_modules/*)" >> /home/${USERNAME}/.bashrc
 
 COPY ./scripts/install_python_utils.sh /tmp/
 RUN USER=${USERNAME} /tmp/install_python_utils.sh
+
+COPY ./scripts/local_setup.sh /tmp/
+RUN /tmp/local_setup.sh
 
 CMD ["/bin/bash"]
