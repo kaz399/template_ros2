@@ -88,10 +88,6 @@ ENV SHELL=/bin/bash
 USER ${USERNAME}
 WORKDIR /home/${USERNAME}/ws
 
-RUN sudo mv /root/ros2_ws/src /opt/hats_modules/
-RUN sudo chown -R ${USER_UID}:${USER_GID} /opt/hats_modules/
-COPY ./scripts/make_link.sh /usr/local/bin/make_link.sh
-
 COPY ./scripts/set-prompt.sh /home/${USERNAME}/.set-prompt.sh
 RUN mkdir /home/${USERNAME}/.local
 RUN mkdir /home/${USERNAME}/.config
@@ -110,7 +106,6 @@ RUN echo "export PYTHONPATH=\${PYTHONPATH}:/home/ros/ws/src/hats_ros2_common/hat
 RUN echo "source /etc/bash_completion.d/git-prompt" >> /home/${USERNAME}/.bashrc
 RUN echo "source ~/.set-prompt.sh" >> /home/${USERNAME}/.bashrc
 RUN echo "alias vi=nvim" >> /home/${USERNAME}/.bashrc
-RUN echo "(cd /home/${USERNAME}/ws/src && /usr/local/bin/make_link.sh /opt/hats_modules/*)" >> /home/${USERNAME}/.bashrc
 
 COPY ./scripts/install_python_utils.sh /tmp/
 RUN USER=${USERNAME} /tmp/install_python_utils.sh
