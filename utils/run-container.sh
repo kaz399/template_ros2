@@ -25,7 +25,7 @@ if [[ -n "${CONTAINER_ID}" ]] ; then
   docker exec -it ${CONTAINER_ID} bash
 else
   echo "start container '${CONTAINER_NAME}'"
-  if [[ -z "${SSH_CLIENT}" ]] ; then
+  if [[ -z "${SSH_CLIENT:-}" ]] ; then
     xhost +local:${USER}
   fi
   docker run \
