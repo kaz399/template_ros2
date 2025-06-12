@@ -10,6 +10,7 @@ PACKAGES="\
     mypy\
     ruff\
     pyright \
+    ros2-pkg-create \
 "
 
 for package in ${PACKAGES} ; do
