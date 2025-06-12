@@ -30,8 +30,7 @@ RUN apt-get install -y python3-venv python3-dev
 RUN apt-get install -y python-is-python3 pipx less ripgrep fd-find colordiff tree vim source-highlight x11vnc
 RUN apt-get install -y libopencv-contrib-dev
 RUN apt-get install -y llvm clangd clang-format lld
-RUN apt-get install -y usbutils
-RUN apt-get install -y gdb
+RUN apt-get install -y usbutils gdb fzf
 
 RUN apt-get install -y apt-transport-https ca-certificates gnupg lsb-release
 RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
