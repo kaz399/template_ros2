@@ -1,7 +1,12 @@
 #!/usr/bin/env bash
 set -eu
+cd ~/
+
 source ~/.bashrc
-export PIPX_HOME=/home/${USER}/.local/share/pipx/venvs
+
+python -m venv ~/.venv
+source ~/.venv/bin/activate
+
 PACKAGES="\
     uv \
     isort\
@@ -14,5 +19,5 @@ PACKAGES="\
 "
 
 for package in ${PACKAGES} ; do
-    pipx install ${package}
+    pip install ${package}
 done
