@@ -4,20 +4,25 @@ cd ~/
 
 source ~/.bashrc
 
-python -m venv ~/.venv
+python3 -m venv --system-site-packages ~/.venv
 source ~/.venv/bin/activate
 
 PACKAGES="\
+    colcon-common-extensions \
+    rosdep \
+    vcstool \
+    argcomplete \
+    empy \
     uv \
-    isort\
-    flake8\
-    black\
-    mypy\
-    ruff\
+    isort \
+    flake8 \
+    black \
+    mypy \
+    ruff \
     pyright \
     ros2-pkg-create \
 "
 
 for package in ${PACKAGES} ; do
-    pip install ${package}
+    pip install -U ${package}
 done
