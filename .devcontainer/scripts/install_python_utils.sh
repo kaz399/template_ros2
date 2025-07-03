@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 set -eu
-cd ~/
 
 source ~/.bashrc
 
@@ -8,11 +7,6 @@ python3 -m venv --system-site-packages ~/.venv
 source ~/.venv/bin/activate
 
 PACKAGES="\
-    colcon-common-extensions \
-    rosdep \
-    vcstool \
-    argcomplete \
-    empy \
     uv \
     isort \
     flake8 \

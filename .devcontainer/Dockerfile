@@ -91,7 +91,6 @@ COPY ./scripts/set-prompt.sh /home/${USERNAME}/.set-prompt.sh
 RUN mkdir /home/${USERNAME}/.local
 RUN mkdir /home/${USERNAME}/.config
 
-RUN echo "if [[ -f /home/${USERNAME}/.venv/bin/activate ]] ; then . /home/${USERNAME}/.venv/bin/activate ; fi" >> /home/${USERNAME}/.bashrc
 RUN echo "if [[ -f /opt/ros/${ROS_DISTRO}/setup.bash ]] ; then . /opt/ros/${ROS_DISTRO}/setup.bash; fi" >> /home/${USERNAME}/.bashrc
 RUN echo "if [[ -f /usr/share/gazebo/setup.bash ]] ; then . /usr/share/gazebo/setup.bash; fi" >> /home/${USERNAME}/.bashrc
 RUN echo "if [[ -f /usr/share/bash-completion/completions/git ]] ; then .  /usr/share/bash-completion/completions/git; fi" >> /home/${USERNAME}/.bashrc
@@ -106,6 +105,8 @@ RUN echo "export PYTHONPATH=\${PYTHONPATH}:/home/ros/ws/src/hats_ros2_common/hat
 RUN echo ". /etc/bash_completion.d/git-prompt" >> /home/${USERNAME}/.bashrc
 RUN echo ". ~/.set-prompt.sh" >> /home/${USERNAME}/.bashrc
 RUN echo "alias vi=nvim" >> /home/${USERNAME}/.bashrc
+RUN echo "if [[ -f /home/${USERNAME}/.venv/bin/activate ]] ; then . /home/${USERNAME}/.venv/bin/activate ; fi" >> /home/${USERNAME}/.bashrc
+RUN echo "if [[ -n \${VIRTUAL_ENV} ]] ; then export PYTHONPATH=\"\$(python -c 'import sysconfig, json; print(sysconfig.get_paths()[\"purelib\"])'):\$PYTHONPATH\" ; fi" >> /home/${USERNAME}/.bashrc
 
 COPY ./scripts/install_python_utils.sh /tmp/
 RUN USER=${USERNAME} /tmp/install_python_utils.sh
